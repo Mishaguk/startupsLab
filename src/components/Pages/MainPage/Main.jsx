@@ -3,7 +3,6 @@ const Main = () => {
   return (
     <div>
       GoitTeens Lab
-      <Navigation />
     </div>
   );
 };
