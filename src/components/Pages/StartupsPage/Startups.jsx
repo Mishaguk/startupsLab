@@ -1,15 +1,17 @@
 import info from './startupsInfo';
 import StartupItem from './StartupItem';
-import './StartupStyles.css';
+import styles from './StartupStyles.module.scss';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import CardGroup from 'react-bootstrap/CardGroup';
 
 const Startups = () => {
   return (
-    <CardGroup>
+    <div className={styles.startupsContainer}>
       {info.map((item) => (
         <StartupItem {...item} key={item.id} />
       ))}
-    </CardGroup>
+    </div>
   );
 };
 export default Startups;

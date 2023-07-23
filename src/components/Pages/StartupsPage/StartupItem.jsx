@@ -1,22 +1,32 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import { Link } from 'react-router-dom';
 
-const StartupItem = ({ name, logoURL, description }) => {
+import styles from './StartupStyles.module.scss';
+
+const StartupItem = ({ name, logoURL, description, id }) => {
   return (
-    <div>
-      <Card style={{ width: '24rem' }}>
-        <div className="imgContainer">
-          <Card.Img variant="top" src={logoURL} />
-        </div>
-        <Card.Body>
-          <Card.Title>{name}</Card.Title>
-          <Card.Text>{description}</Card.Text>
-          <Button variant="primary">More...</Button>
-        </Card.Body>
-      </Card>
-    </div>
+    <Card style={{ width: '23rem', margin: '6px', marginBottom: '30px' }}>
+      <div className={styles.cardImage}>
+        <Card.Img variant="top" src={logoURL} />
+      </div>
+
+      <Card.Body>
+        <Card.Title>{name}</Card.Title>
+        <Card.Text className={styles.cardDescription}>{description}</Card.Text>
+        <Button variant="primary">
+          <Link
+            style={{
+              color: 'white',
+              textDecoration: 'none',
+            }}
+            to={`/startups/startupDetail/${id}`}
+          >
+            More...
+          </Link>
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };
 export default StartupItem;

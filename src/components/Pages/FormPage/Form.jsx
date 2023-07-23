@@ -1,32 +1,149 @@
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import info from '../StartupsPage/startupsInfo';
+import toastr from 'toastr';
+import '../../../../node_modules/toastr/build/toastr.min.css';
+import styles from './FormStyles.scss';
+
+toastr.options = {
+  closeButton: false,
+  debug: false,
+  newestOnTop: false,
+  progressBar: false,
+  positionClass: 'toast-top-right',
+  preventDuplicates: false,
+  onclick: null,
+  showDuration: '300',
+  hideDuration: '1000',
+  timeOut: '5000',
+  extendedTimeOut: '1000',
+  showEasing: 'swing',
+  hideEasing: 'linear',
+  showMethod: 'fadeIn',
+  hideMethod: 'fadeOut',
+};
 
 const UserForm = () => {
-  
+  const [addStartup, setAddStartup] = useState({
+    name: '',
+    logoURL: '',
+    description: '',
+    owner: '',
+    creationDate: '',
+  });
+
+  const now = new Date();
+  const month = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const currentMonth = month[now.getMonth()];
+  const date = `${now.getFullYear()} , ${currentMonth}, ${now.getDate()}`;
+
+  const clearFields = () => {
+    setAddStartup({
+      name: '',
+      logoURL: '',
+      description: '',
+      owner: '',
+      creationDate: '',
+    });
+  };
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setAddStartup((prevState) => ({
+          ...prevState,
+          logoURL: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setAddStartup((prevState) => ({
+      ...prevState,
+      [name]: value,
+      creationDate: date,
+    }));
+  };
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    localStorage.setItem('newStartup', addStartup);
+    console.log(localStorage.getItem('newStartup'));
+  };
   return (
     <div>
-      <Form className='mx-auto w-50'>
+      <Form className="mx-auto w-50" onSubmit={handleFormSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Назва стартапу</Form.Label>
-          <Form.Control className='' type="text" placeholder="Введіть текст" />
+          <Form.Label>Enter your name</Form.Label>
+          <Form.Control
+            type="text"
+            name="owner"
+            onChange={handleFormChange}
+            value={addStartup.owner}
+            placeholder="Enter the text"
+          />
+        </Form.Group>
+      </Form>
+      <Form className="mx-auto w-50">
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Startup's name</Form.Label>
+          <Form.Control
+            name="name"
+            type="text"
+            placeholder="Enter the text"
+            onChange={handleFormChange}
+            value={addStartup.name}
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Опис стартапу</Form.Label>
-          <Form.Control type="text" placeholder="Введіть текст" />
+          <Form.Label>Startup description</Form.Label>
+          <Form.Control
+            type="text"
+            name="description"
+            placeholder="Enter the text"
+            onChange={handleFormChange}
+            value={addStartup.description}
+          />
         </Form.Group>
-
         <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Картинка, яка описує стартап</Form.Label>
-          <Form.Control type="file" />
+          <Form.Label>Your startup logo</Form.Label>
+          <Form.Control
+            name="logoURL"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Надіслати
-        </Button>
+        <Form.Group>
+          <Button variant="primary" type="submit" onClick={handleFormSubmit}>
+            Надіслати
+          </Button>
+        </Form.Group>
       </Form>
     </div>
-  )
-}
+  );
+};
 
-export default UserForm
+export default UserForm;

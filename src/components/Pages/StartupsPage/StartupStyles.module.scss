@@ -1,0 +1,44 @@
+.cardImage {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  height: 300px;
+
+  img {
+    width: 300px;
+    object-fit: cover;
+    border-radius: 60px;
+  }
+}
+.cardDescription {
+  height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  border-bottom: solid rgb(32, 32, 32) 1px;
+}
+.startupsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  background-image: url(https://img.freepik.com/free-photo/gray-wall-textures-background_74190-4389.jpg?w=2000);
+}
+.detailLink {
+  text-decoration: none;
+}
+@media (max-width: 1518px) {
+  .startupsContainer {
+    justify-content: space-evenly;
+  }
+}
+@media (max-width: 640px) {
+  .cardImage {
+    height: 350px;
+    img {
+      width: 350px;
+      object-fit: cover;
+    }
+  }
+}

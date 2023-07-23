@@ -1,0 +1,68 @@
+.startupDetailContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.imageContainer {
+  display: flex;
+  justify-content: center;
+
+  height: 600px;
+
+  img {
+    width: 600px;
+    object-fit: cover;
+    border: solid rgb(114, 111, 111) 3px;
+    border-radius: 100px;
+  }
+}
+.detailStartupInfo {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  border-top: solid rgb(28, 228, 28) 3px;
+  display: relative;
+  margin-left: 75px;
+  margin-right: 75px;
+
+  padding: 85px;
+  margin-top: 55px;
+}
+.detailStartupDescr {
+  font-size: 24px;
+}
+.navigationButtons {
+  display: flex;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+
+  width: 100%;
+  justify-content: space-between;
+  padding-left: 55px;
+  padding-right: 55px;
+}
+.pageNaviagtonText {
+  font-size: 24px;
+  padding: 10px;
+}
+@media (max-width: 640px) {
+  .detailStartupInfo {
+    padding: 0;
+    padding-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .navigationButtons {
+    padding: 0;
+  }
+  .imageContainer {
+    display: flex;
+    justify-content: center;
+
+    height: 350px;
+
+    img {
+      width: 350px;
+      object-fit: cover;
+    }
+  }
+}
