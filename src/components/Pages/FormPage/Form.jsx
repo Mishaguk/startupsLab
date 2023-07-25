@@ -2,27 +2,10 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import info from '../StartupsPage/startupsInfo';
-import toastr from 'toastr';
-import '../../../../node_modules/toastr/build/toastr.min.css';
+import { isStartupNameInvalid } from './FormValidation';
+
 import styles from './FormStyles.scss';
 
-toastr.options = {
-  closeButton: false,
-  debug: false,
-  newestOnTop: false,
-  progressBar: false,
-  positionClass: 'toast-top-right',
-  preventDuplicates: false,
-  onclick: null,
-  showDuration: '300',
-  hideDuration: '1000',
-  timeOut: '5000',
-  extendedTimeOut: '1000',
-  showEasing: 'swing',
-  hideEasing: 'linear',
-  showMethod: 'fadeIn',
-  hideMethod: 'fadeOut',
-};
 
 const UserForm = () => {
   const [addStartup, setAddStartup] = useState({
@@ -32,7 +15,12 @@ const UserForm = () => {
     owner: '',
     creationDate: '',
   });
-
+  const [isInvalid, setIsInvalid] = useState({
+    isStartupNameInvalid : false,
+    isLogoInvalid : false,
+    isDescriptionInvalid : false,
+    
+  })
   const now = new Date();
   const month = [
     'January',
@@ -75,9 +63,12 @@ const UserForm = () => {
       reader.readAsDataURL(file);
     }
   };
+  
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
+    
+    
     setAddStartup((prevState) => ({
       ...prevState,
       [name]: value,
@@ -86,12 +77,21 @@ const UserForm = () => {
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    localStorage.setItem('newStartup', addStartup);
-    console.log(localStorage.getItem('newStartup'));
+    if (isStartupNameInvalid(addStartup.name)) {
+      setIsInvalid(prevState => ({
+        ...prevState,
+        isStartupNameInvalid : true
+      }))
+   
+    } else setIsInvalid(false)
+    localStorage.setItem('newStartup', {...addStartup});
+    console.log(localStorage.getItem(addStartup));
+    
   };
   return (
     <div>
+      
+
       <Form className="mx-auto w-50" onSubmit={handleFormSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Enter your name</Form.Label>
@@ -113,6 +113,7 @@ const UserForm = () => {
             placeholder="Enter the text"
             onChange={handleFormChange}
             value={addStartup.name}
+            isInvalid={isInvalid.isStartupNameInvalid}
           />
         </Form.Group>
 

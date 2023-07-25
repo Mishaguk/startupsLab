@@ -23,12 +23,12 @@
 .startupsContainer {
   display: flex;
   flex-wrap: wrap;
-  background-image: url(https://img.freepik.com/free-photo/gray-wall-textures-background_74190-4389.jpg?w=2000);
+  
 }
 .detailLink {
   text-decoration: none;
 }
-@media (max-width: 1518px) {
+@media (max-width: 1800px) {
   .startupsContainer {
     justify-content: space-evenly;
   }
